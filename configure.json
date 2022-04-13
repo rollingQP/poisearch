@@ -1,0 +1,14 @@
+{
+    "Key": [
+    { "name":"amap" , "key":"a2d03b09e4cd9c7a207cab6dc40a39f6" }, 
+    { "name":"googlemap" , "key":"a2d03b09e4cd9c7a207cab6dc40a39f6" }
+    ],
+    
+    "MSP":"amap",
+    
+    "page_max_limit": 2,
+    
+    "keywords_file":"search.csv",
+    
+    "cities_file":"cities.csv"
+}
