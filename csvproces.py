@@ -136,8 +136,7 @@ if __name__ == '__main__':
             results.append(get_result(web_key, url, page_max_limit, cityName, classfiled))
 
     # 输出
-        console_output(results, singleCity)
-
+    console_output(results, singleCity)
 
     # csv
     csvData = get_csvData(results, singleCity)
