@@ -1,0 +1,6 @@
+{
+    "Key": [
+    { "name":"amap" , "key":"YOURKEY" },
+    { "name":"googlemap" , "key":"YOURKEY" }
+    ]
+}
