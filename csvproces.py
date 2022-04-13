@@ -38,19 +38,7 @@ def get_csvData(results, singleCity):
         for result in results:
             for i in range(len(result['pois'])):
                 result['pois'][i]['gdwebsite'] = 'https://amap.com/place/' + result['pois'][i]['id']
-                csvData.append({'name': result['pois'][i]['name'],
-                                'pname': result['pois'][i]['pname'],
-                                'cityname': result['pois'][i]['cityname'],
-                                'adname': result['pois'][i]['adname'],
-                                'business_area': result['pois'][i]['business_area'],
-                                'address': result['pois'][i]['address'],
-                                'gdwebsite': result['pois'][i]['gdwebsite']})
-
-    else:
-        for city in results:
-            for result in city:
-                for i in range(len(result['pois'])):
-                    result['pois'][i]['gdwebsite'] = 'https://amap.com/place/' + result['pois'][i]['id']
+                try:
                     csvData.append({'name': result['pois'][i]['name'],
                                     'pname': result['pois'][i]['pname'],
                                     'cityname': result['pois'][i]['cityname'],
@@ -58,6 +46,24 @@ def get_csvData(results, singleCity):
                                     'business_area': result['pois'][i]['business_area'],
                                     'address': result['pois'][i]['address'],
                                     'gdwebsite': result['pois'][i]['gdwebsite']})
+                except:
+                    print('有误，请单独处理：' + result['pois'][i]['gdwebsite'])
+
+    else:
+        for city in results:
+            for result in city:
+                for i in range(len(result['pois'])):
+                    result['pois'][i]['gdwebsite'] = 'https://amap.com/place/' + result['pois'][i]['id']
+                    try:
+                        csvData.append({'name': result['pois'][i]['name'],
+                                        'pname': result['pois'][i]['pname'],
+                                        'cityname': result['pois'][i]['cityname'],
+                                        'adname': result['pois'][i]['adname'],
+                                        'business_area': result['pois'][i]['business_area'],
+                                        'address': result['pois'][i]['address'],
+                                        'gdwebsite': result['pois'][i]['gdwebsite']})
+                    except:
+                        print('有误，请单独处理：' + result['pois'][i]['gdwebsite'])
     return csvData
 
 
@@ -67,23 +73,7 @@ def console_output(results, singleCity):
         for result in results:
             for i in range(len(result['pois'])):
                 result['pois'][i]['gdwebsite'] = 'https://amap.com/place/' + result['pois'][i]['id']
-                print(count, ': 名称:', result['pois'][i]['name']
-                      , '\n类型:', result['pois'][i]['type']
-                      , '\n省份:', result['pois'][i]['pname']
-                      , '\n城市:', result['pois'][i]['cityname']
-                      , '\n地区:', result['pois'][i]['adname']
-                      , '\n乡镇:', result['pois'][i]['business_area']
-                      , '\n详细地址:', result['pois'][i]['address']
-                      # , '\n经纬度:', result['pois'][i]['location']
-                      , '\n在高德地图中显示:', result['pois'][i]['gdwebsite']
-                      , '\n'
-                      )
-                count += 1
-
-    else:
-        for city in results:
-            for result in city:
-                for i in range(len(result['pois'])):
+                try:
                     print(count, ': 名称:', result['pois'][i]['name']
                           , '\n类型:', result['pois'][i]['type']
                           , '\n省份:', result['pois'][i]['pname']
@@ -92,15 +82,38 @@ def console_output(results, singleCity):
                           , '\n乡镇:', result['pois'][i]['business_area']
                           , '\n详细地址:', result['pois'][i]['address']
                           # , '\n经纬度:', result['pois'][i]['location']
-                          , '\n在高德地图中显示:', 'https://amap.com/place/' + result['pois'][i]['id']
+                          , '\n在高德地图中显示:', result['pois'][i]['gdwebsite']
                           , '\n'
                           )
+                except:
+                    print('有误，请单独处理：' + result['pois'][i]['gdwebsite'])
+                count += 1
+
+    else:
+        for city in results:
+            for result in city:
+                for i in range(len(result['pois'])):
+                    result['pois'][i]['gdwebsite'] = 'https://amap.com/place/' + result['pois'][i]['id']
+                    try:
+                        print(count, ': 名称:', result['pois'][i]['name']
+                              , '\n类型:', result['pois'][i]['type']
+                              , '\n省份:', result['pois'][i]['pname']
+                              , '\n城市:', result['pois'][i]['cityname']
+                              , '\n地区:', result['pois'][i]['adname']
+                              , '\n乡镇:', result['pois'][i]['business_area']
+                              , '\n详细地址:', result['pois'][i]['address']
+                              # , '\n经纬度:', result['pois'][i]['location']
+                              , '\n在高德地图中显示:', result['pois'][i]['gdwebsite']
+                              , '\n'
+                              )
+                    except:
+                        print('有误，请单独处理：' + result['pois'][i]['gdwebsite'])
                     count += 1
 
 
 def csv_output(csvData, fileName):
     headers = ['name', 'pname', 'cityname', 'adname', 'business_area', 'address', 'gdwebsite']
-    with open(fileName, 'w', newline='') as outPutFile:
+    with open(fileName, 'w', newline='', encoding='utf-8-sig') as outPutFile:
         csvFile = csv.DictWriter(outPutFile, headers)
         csvFile.writeheader()
         for result in results:
@@ -123,7 +136,8 @@ if __name__ == '__main__':
             results.append(get_result(web_key, url, page_max_limit, cityName, classfiled))
 
     # 输出
-    console_output(results, singleCity)
+        console_output(results, singleCity)
+
 
     # csv
     csvData = get_csvData(results, singleCity)
